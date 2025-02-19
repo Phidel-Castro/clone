@@ -19,27 +19,30 @@ class ATM:
             return f"You have withdrawn KES {amount}. Your remaining balance is: KES {self.balance}"
         return "Invalid withdrawal amount or insufficient funds."
 
-# Streamlit UI
-st.title("ATM Interface")
-atm = ATM()
-
+# Initialize session state
 if "balance" not in st.session_state:
-    st.session_state.balance = atm.balance
+    st.session_state.balance = 15000  # Initial balance
 
+# Display current balance
+st.title("ATM Interface")
 st.write(f"### Current Balance: KES {st.session_state.balance}")
 
 # Deposit Section
 deposit_amount = st.number_input("Enter amount to deposit", min_value=0.0, step=100.0)
 if st.button("Deposit"):
-    message = atm.deposit(deposit_amount)
-    st.session_state.balance = atm.balance
-    st.success(message)
+    if deposit_amount > 0:
+        st.session_state.balance += deposit_amount
+        st.success(f"You have deposited KES {deposit_amount}. Your new balance is: KES {st.session_state.balance}")
+    else:
+        st.error("Invalid deposit amount.")
 
 # Withdraw Section
 withdraw_amount = st.number_input("Enter amount to withdraw", min_value=0.0, step=100.0)
 if st.button("Withdraw"):
-    message = atm.withdraw(withdraw_amount)
-    st.session_state.balance = atm.balance
-    st.success(message)
+    if 0 < withdraw_amount <= st.session_state.balance:
+        st.session_state.balance -= withdraw_amount
+        st.success(f"You have withdrawn KES {withdraw_amount}. Your remaining balance is: KES {st.session_state.balance}")
+    else:
+        st.error("Invalid withdrawal amount or insufficient funds.")
 
 st.write(f"### Updated Balance: KES {st.session_state.balance}")
