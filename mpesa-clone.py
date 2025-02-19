@@ -43,7 +43,7 @@ if "balance" not in st.session_state:
     st.session_state.balance = 15000  # Initial balance
 
 # Display Title
-st.markdown('<h1 class="main-title">💰 ATM Interface 💳</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">💰 Mpesa-Clone Interface 💳</h1>', unsafe_allow_html=True)
 
 # Display Current Balance
 st.markdown(f'<div class="balance-box">Current Balance: <br> <span style="color: #4CAF50;">KES {st.session_state.balance}</span></div>', unsafe_allow_html=True)
